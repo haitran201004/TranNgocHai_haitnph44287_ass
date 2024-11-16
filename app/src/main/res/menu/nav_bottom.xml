@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/it_work"
+        android:icon="@drawable/briefcase"
+        android:title="Quản Lý Công Việc"/>
+    <item
+        android:id="@+id/it_gioithieu"
+        android:icon="@drawable/user"
+        android:title="Giới Thiệu" />
+
+</menu>
