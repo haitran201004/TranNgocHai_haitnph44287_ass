@@ -55,8 +55,5 @@ public class RegisterActivity2 extends AppCompatActivity {
         if(dao.register(userDTO)){
             finish();
         }
-
-
-
     }
 }
