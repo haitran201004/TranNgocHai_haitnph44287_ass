@@ -1,4 +1,4 @@
-package com.example.tranngochai_haitnph44287_ass;
+package com.example.tranngochai_haitnph44287_ass.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

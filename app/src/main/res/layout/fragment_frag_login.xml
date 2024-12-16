@@ -36,10 +36,11 @@
             android:layout_height="wrap_content"
             android:hint="Username"
             android:inputType="text"
+            android:layout_marginBottom="16dp"
             android:textColorHint="#7f7f7f"
             android:padding="16dp"
-            android:layout_marginBottom="16dp"
             android:background="@drawable/bg_edit"/>
+
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -50,8 +51,17 @@
             android:textColor="#000000"
             android:textColorHint="#7f7f7f"
             android:padding="16dp"
-            android:layout_marginBottom="32dp"
+
             android:background="@drawable/bg_edit"/>
+        <TextView
+            android:id="@+id/tv_mk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quên mật khẩu"
+            android:textColor="#AA494646"
+            android:layout_marginBottom="32dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"/>
 
         <Button
             android:id="@+id/loginButton"

@@ -66,7 +66,21 @@ public class UserDao {
         boolean isLogin = c.getCount() > 0;
         return isLogin;
     }
+    public boolean resetPassword(String usernameOrEmail, String newPassword) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase(); // Mở cơ sở dữ liệu để ghi
+        ContentValues values = new ContentValues();
+        values.put("password", newPassword); // Đặt mật khẩu mới
 
+        // Cập nhật bảng tb_users
+        int rowsUpdated = db.update(
+                "tb_users",          // Tên bảng
+                values,              // Giá trị cần cập nhật
+                "username = ? OR email = ?", // Điều kiện: username hoặc email khớp
+                new String[]{usernameOrEmail, usernameOrEmail} // Tham số điều kiện
+        );
 
+        db.close(); // Đóng cơ sở dữ liệu
+        return rowsUpdated > 0; // Trả về true nếu có ít nhất một dòng được cập nhật
+    }
 
 }

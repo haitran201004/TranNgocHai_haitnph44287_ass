@@ -3,6 +3,8 @@ package com.example.tranngochai_haitnph44287_ass.Adapter;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tranngochai_haitnph44287_ass.DAO.CongViecDao;
@@ -269,6 +272,7 @@ public class CongViecAdapter extends RecyclerView.Adapter<CongViecAdapter.ViewHo
             dialog.dismiss();
         });
     }
+
     private void showDeleteDialog( CongViecDTO congViecDTO) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -277,6 +281,7 @@ public class CongViecAdapter extends RecyclerView.Adapter<CongViecAdapter.ViewHo
         builder.setPositiveButton("Xóa", (dialog, which) -> {
             boolean isDeleted = dao.deleteDao(congViecDTO.getId()); // Xóa trong cơ sở dữ liệu
             if (isDeleted) {
+                showNotification("Xóa Thành Công", "Đã xóa sản phẩm thành công");
                 list.clear();
                 list.addAll(dao.getList());
                 notifyDataSetChanged();
@@ -293,5 +298,28 @@ public class CongViecAdapter extends RecyclerView.Adapter<CongViecAdapter.ViewHo
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+    private void showNotification(String title, String message) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "delete_channel",
+                    "Xóa lịch thi",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.enableVibration(true); // Bật rung
+            channel.setSound(null, null);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "delete_channel")
+                .setSmallIcon(R.drawable.ic_launcher_foreground) // Thay bằng icon hợp lệ
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setAutoCancel(true);
+
+        notificationManager.notify(1, builder.build());
+    }
 }

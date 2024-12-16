@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDbHelper extends SQLiteOpenHelper {
 
     public MyDbHelper(Context context){
-        super(context, "QLCV.db",null,5);
+        super(context, "QLCV.db",null,8);
     }
 
 
@@ -22,6 +22,8 @@ public class MyDbHelper extends SQLiteOpenHelper {
     String sqlvalueWork = "INSERT INTO tb_congviec (name, content, start_date, end_date) VALUES ('dev','dsjhgvjmxhcxvxcb','2024/07/08','2024/07/09')";
     sqLiteDatabase.execSQL(sqlWork);
     sqLiteDatabase.execSQL(sqlvalueWork);
+    String sqlSPin = "CREATE TABLE IF NOT EXISTS tb_spin (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT NOT NULL, thuong INTEGER NOT NULL)";
+    sqLiteDatabase.execSQL(sqlSPin);
     }
 
     @Override
@@ -29,6 +31,7 @@ public class MyDbHelper extends SQLiteOpenHelper {
         if(i1 > i) { // i1 là pban mới, i là phiên bản cũ
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS tb_users");
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS tb_congviec");
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS tb_spin");
             onCreate(sqLiteDatabase);
         }
     }

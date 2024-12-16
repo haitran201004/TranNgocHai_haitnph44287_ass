@@ -56,6 +56,18 @@
             android:text="Môn học: AND102"
             android:textSize="18sp"
             android:layout_marginBottom="8dp" />
+        <Button
+            android:id="@+id/btnSpin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quay Thưởng"
+            android:textSize="24sp"
+            android:background="#FF9382"
+            android:textColor="@color/white"
+            android:drawablePadding="10dp"
+            android:padding="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 

@@ -2,8 +2,12 @@ package com.example.tranngochai_haitnph44287_ass.Fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -168,15 +172,9 @@ public class QL_CongViec extends Fragment {
                         },
                         year, month, day
                 );
-
                 datePickerDialog.show();
             }
         });
-
-
-
-
-
         btnSave.setOnClickListener(v -> {
             // Lấy giá trị mới từ các EditText
             String newName = edtName.getText().toString();
@@ -196,10 +194,9 @@ public class QL_CongViec extends Fragment {
             congViecDTO.setStart_date(newStartDate);
             congViecDTO.setEnd_date(newEndDate);
 
-
-
             int isADD = congViecDAO.addRow(congViecDTO);
             if (isADD > 0) {
+                showNotificationAdd("Thêm Công Việc", "Thêm Công Việc thành công");
                 list.clear();
                 list.addAll(congViecDAO.getList());
                 congViecAdapter.notifyDataSetChanged();
@@ -207,9 +204,30 @@ public class QL_CongViec extends Fragment {
             }else {
                 Toast.makeText(getContext(), "Thêm Công Việc thất bại", Toast.LENGTH_SHORT).show();
             }
-
-
             dialog.dismiss();
         });
     }
+    private void showNotificationAdd(String title, String message) {
+        // Tạo kênh thông báo (chỉ cần thực hiện một lần, nếu đã có thì bỏ qua bước này)
+        String channelId = "job_channel";
+        String channelName = "Job Notifications";
+        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("Thông báo khi thêm công việc");
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Tạo nội dung Notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), channelId)
+                .setSmallIcon(R.drawable.ic_launcher_foreground) // Thay bằng icon của bạn
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH) // Đặt mức độ ưu tiên cao
+                .setAutoCancel(true); // Tự động hủy thông báo khi người dùng nhấn vào
+        // Hiển thị Notification
+        notificationManager.notify(2, builder.build());
+    }
+
 }
